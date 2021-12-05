@@ -16,14 +16,14 @@ class ContactHelper {
 
   factory ContactHelper() => _instance;
 
-  late Database _db;
+  Database? _db;
 
   Future<Database> get db async {
     if (_db != null) {
-      return _db;
+      return _db!;
     } else {
       _db = await initDb();
-      return _db;
+      return _db!;
     }
   }
 
@@ -77,10 +77,10 @@ class ContactHelper {
         where: "$idColumn = ?", whereArgs: [contact.id]);
   }
 
-  getAllContacts() async{
+  Future<List<Contact>> getAllContacts() async{
     Database dbContact = await db;
     List listMap = await dbContact.rawQuery("SELECT * FROM $contactTable");
-    List<Contact> listContact = List.empty();
+    List<Contact> listContact = [];
     for(Map m in listMap) {
       listContact.add(Contact.fromMap(m));
     }
@@ -105,9 +105,11 @@ class Contact {
   String? phone;
   String? img;
 
+  Contact();
+
   Contact.fromMap(Map map) {
     id = map[idColumn];
-    name = map[phoneColumn];
+    name = map[nameColumn];
     email = map[emailColumn];
     phone = map[phoneColumn];
     img = map[imgColumn];
