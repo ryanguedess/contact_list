@@ -1,3 +1,5 @@
+
+
 import 'package:sqflite/sqflite.dart';
 import 'package:sqflite/sql.dart';
 import 'package:path/path.dart';
@@ -87,7 +89,7 @@ class ContactHelper {
     return listContact;
   }
 
-  Future<int> getNumbers() async{
+  Future<int?> getNumbers() async{
     Database dbContact = await db;
     return Sqflite.firstIntValue(await dbContact.rawQuery("SELECT COUNT(*) FROM $contactTable"));
 
